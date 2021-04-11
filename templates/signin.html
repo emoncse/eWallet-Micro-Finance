@@ -71,13 +71,13 @@
 			<div class="form-left">
 				<img src="{% static 'images/form-v6.jpg' %}" alt="form">
 			</div>
-			<form class="form-detail" action="login" method="post">
+			<form class="form-detail" action="{% url 'signin' %}" method="POST">
                 {% csrf_token %}
 				<h2>Sign in</h2>
                 <br>
 
 				<div class="form-row">
-					<input type="text" name="full-name" id="full-name" class="input-text" placeholder="Your Username" required>
+					<input type="text" name="username" id="full-name" class="input-text" placeholder="Your Username" required>
 				</div>
 
 				<div class="form-row">
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="form-row-last">
-					<input type="submit" name="register" class="register" value="Sign in">
+					<input type="submit" name="signin" class="register" value="signin" placeholder="Sign In">
 				</div>
 
                 <div class="form-row-last">

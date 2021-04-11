@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Inner Page - Selecao Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/line-awesome/css/line-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <h1 class="text-light"><a href="#">eWallet</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Edit Profile</a></li>
+          <li><a href="#">Change Password</a></li>
+          <li><a href="{% url 'signout' %}">Log Out</a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Profile</h2>
+          <ol>
+            <li><a href="#">Profile</a></li>
+            <li>Profile Page</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container">
+        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+<div class="wrapper">
+    <div class="left">
+        <img src="{{ image }}" alt="user" width="200">
+        <h4>{{ name }}</h4>
+         <a>{{ email }}</a>
+         <p>{{ usertype }}</p>
+    </div>
+      <div class="right">
+        <div class="info">
+            <h3>Personal Info</h3>
+            <div class="info_data">
+                 <div class="data">
+                    <a>Username</a>
+                    <p>{{ username }}</p>
+                 </div>
+              <div class="data">
+                    <a>Email</a>
+                    <p>{{ email }}</p>
+                 </div>
+                 <div class="data">
+                   <a>Phone</a>
+                    <p>{{ phone }}</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="info">
+          <h3>Basic Info</h3>
+          <div class="info_data">
+               <div class="data">
+                  <a>Gender</a>
+                  <p>{{ gender }}</p>
+               </div>
+            <div class="data">
+                  <a>Date of Birth</a>
+                  <p>{{ dob }}</p>
+               </div>
+               <div class="data">
+                 <a>NID</a>
+                  <p>{{ nid }}</p>
+            </div>
+          </div>
+      </div>
+      
+      <div class="Wallet">
+        <div class="projects_data">
+          <div class="data">
+            <a>Institution</a>
+            <p>{{ institution }}</p>
+          </div>
+          <div class="data">
+            <a>Occupation</a>
+            <p>{{ occupation }}</p>
+          </div>
+          <div class="data">
+            <a>Address</a>
+            <p>{{ address }}</p>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <!-- <div class="Wallet">
+        <div class="projects_data">
+          <div class="data">
+            <a>Balance</a>
+            <p>55000</p>
+          </div>
+          <div class="data">
+            <a>Investment</a>
+            <p>115000</p>
+          </div>
+          <div class="data">
+            <a>Profit</a>
+            <p>17900</p>
+          </div>
+        </div>
+      </div> -->
+
+      <br>
+      <div class="projects">
+          <h3>Wallet</h3>
+          <div class="Wallet">
+            <div class="projects_data">
+              <div class="data">
+                <a>Balance</a>
+                <p>00.0</p>
+              </div>
+              <div class="data">
+                <a>Deadline</a>
+                <p>20/04/2021</p>
+              </div>
+              <div class="data">
+                <a>Remaining</a>
+                <p>17900.00</p>
+              </div>
+            </div>
+          </div>
+          <div class="Wallet">
+            <div class="projects_data">
+              <div class="data">
+                <a>Loan Status</a>
+                <p>Active</p>
+              </div>
+              <div class="data">
+                <a>Loan Amount</a>
+                <p>10000</p>
+              </div>
+              <div class="data">
+                <a>Interest</a>
+                <p>7%</p>
+              </div>
+            </div>
+          </div>
+          <div class="Wallet">
+            <div class="projects_data">
+              <div class="data">
+                <a>Instalment</a>
+                <p>500</p>
+              </div>
+              <div class="data">
+                <a>Instalment No</a>
+                <p>115000</p>
+              </div>
+              <div class="data">
+                <a>Last Payment</a>
+                <p>500.00</p>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+        <div class="social_media">
+            <ul>
+              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+      </div>
+    </div>
+</div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  ======= Footer ======= -->
+  
+
+  <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
