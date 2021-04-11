@@ -52,52 +52,54 @@ def signup(request):
         fs = FileSystemStorage()
         imagename = fs.save(image.name, image)
         upload_url = fs.url(imagename)
-
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-            )
-        user.save()
-        new_user = authenticate(username=username, password=password)
-        user_extend = users_account(
-            usertype=usertype,
-            username=new_user,
-            )
-        user_extend.save()
-        if usertype == 'investor':
-            investor = InvestorsWallet.objects.create(
-                username=new_user,
-                name=name,
-                gender=gender,
-                dob=dob,
-                occupation=occupation,
-                institution=institution,
-                email=email,
-                nid=nid,
-                image=upload_url,
-                phone=phone,
-                address=address,
-            )
-            investor.save()
-            return HttpResponse("Investor User Created.")
+        check = User.objects.filter(username=username)
+        if check:
+            return render(request, "registration.html", {'Message': True})
         else:
-            loan_seeker = LoanSeeker.objects.create(
-                username=new_user,
-                name=name,
-                gender=gender,
-                dob=dob,
-                occupation=occupation,
-                institution=institution,
+            user = User.objects.create_user(
+                username=username,
                 email=email,
-                nid=nid,
-                image=upload_url,
-                phone=phone,
-                address=address,
-            )
-            loan_seeker.save()
-            print('user created')
-            return render(request, profile)
+                password=password
+                )
+            user.save()
+            new_user = authenticate(username=username, password=password)
+            user_extend = users_account(
+                usertype=usertype,
+                username=new_user,
+                )
+            user_extend.save()
+            if usertype == 'investor':
+                investor = InvestorsWallet.objects.create(
+                    username=new_user,
+                    name=name,
+                    gender=gender,
+                    dob=dob,
+                    occupation=occupation,
+                    institution=institution,
+                    email=email,
+                    nid=nid,
+                    image=upload_url,
+                    phone=phone,
+                    address=address,
+                )
+                investor.save()
+                return HttpResponse("Investor User Created.")
+            else:
+                loan_seeker = LoanSeeker.objects.create(
+                    username=new_user,
+                    name=name,
+                    gender=gender,
+                    dob=dob,
+                    occupation=occupation,
+                    institution=institution,
+                    email=email,
+                    nid=nid,
+                    image=upload_url,
+                    phone=phone,
+                    address=address,
+                )
+                loan_seeker.save()
+                return render(request, 'signin.html')
     else:
         return render(request, 'registration.html')
 
@@ -134,5 +136,4 @@ def profile(request):
 
 def logout_user(request):
     logout(request)
-    messages.success(request, 'You Have Been Logged Out.')
     return redirect('home')
