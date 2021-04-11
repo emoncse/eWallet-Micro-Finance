@@ -12,6 +12,8 @@ from django.urls import reverse
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return render(request, 'profile.html')
     return render(request, 'index.html')
 
 
