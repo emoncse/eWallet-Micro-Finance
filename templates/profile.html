@@ -72,10 +72,10 @@
                      <h4>{{ name }}</h4>
                      <a>{{ email }}</a>
                      <p>{{ usertype }}</p>
-                     <button onclick="location.href = {% url 'loan' %} " class="button"><span>Apply Loan</span></button>
+                     <button onclick="location.href = {% url 'loan_app' %} " class="button"><span>Apply Loan</span></button>
                      <button onclick="location.href='https://www.google.com'" class="button"><span>Transactions</span></button>
                      <button onclick="location.href='https://www.google.com'" class="button"><span>Money Withdraw</span></button>
-                     <button onclick="location.href='https://www.google.com'" class="button"><span>Update Profile</span></button>
+                     <button onclick="location.href='{% url 'loan_status' %}'" class="button"><span>Loan Status</span></button>
                   </div>
                   <div class="right">
                      <div class="info">

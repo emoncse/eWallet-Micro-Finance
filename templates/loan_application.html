@@ -67,9 +67,10 @@
          <section class="inner-page">
             <div class="container">
                 <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-                <form action="{% url 'loan' %}" method="POST">
+                <form action="{% url 'loan_app' %}" method="POST">
+                    {% csrf_token %}
                 <div class="form-control-mds label-up four twelve--tablet twelve-phone push-top-2">
-                  <select data-placeholder=" " class="chosen-select combo-material input-control" required name="country_selector">
+                  <select data-placeholder=" " class="chosen-select combo-material input-control" required name="amount">
                                         <option value="0"></option>
                                         <option value="500">500</option>
                                         <option value="1000">1000</option>
@@ -79,15 +80,14 @@
                                         <option value="10000">10000</option>
                                     </select>
                   <label for="country_selector" class="label-control">Select Amount</label>
+                    <button class="button" type="submit" name="submit" value="submit"><span>Submit</span></button>
                   <div class="field-error">
                     Mandatory field
                   </div>
                 </div>
               </form>
-              <button class="button" type="submit" name="submit" value="submit"><span>Submit</span></button>
-          </div>
 
-            </div>>
+          </div>
          </section>
 
       <!-- End #main -->
@@ -104,5 +104,15 @@
       <!-- Template Main JS File -->
       <script src="{% static 'assets/js/main.js' %}"></script>
       <script src="{% static 'assets/js/drop-down.js' %}"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{#      <script>#}
+{#      $(document).ready(function(){#}
+{#      $("button").click(function(){#}
+{#         alert("Loan application has been submitted. Waiting for approval. Check profile section.");#}
+{#         window.location = '{% url 'profile' %}';#}
+{#       });#}
+{#      });#}
+{#      </script>#}
+      </main>
    </body>
 </html>

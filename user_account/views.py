@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from loan_seeker.models import LoanSeeker
-from investor.models import InvestorsWallet
+from loan_seeker.models import LoanSeeker, LoanSeekersWallet
+from loan.models import Loan
+from investor.models import Investor, InvestorsWallet
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
@@ -12,6 +13,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from datetime import date
 
 
 def home(request):
@@ -76,7 +78,7 @@ def signup(request):
                 )
             user_extend.save()
             if usertype == 'investor':
-                investor = InvestorsWallet.objects.create(
+                investor = Investor.objects.create(
                     username=new_user,
                     name=name,
                     gender=gender,
@@ -89,6 +91,7 @@ def signup(request):
                     phone=phone,
                     address=address,
                 )
+
                 investor.save()
                 return HttpResponse("Investor User Created.")
             else:
@@ -109,7 +112,7 @@ def signup(request):
 
                 ##### welcome mail send
 
-                subject = 'Welcome to our class'
+                subject = 'Welcome to eWallet'
                 body = render_to_string('user_accounts/intro_email.html')
 
                 send_mail(
@@ -153,12 +156,29 @@ def profile(request):
     else:
         return render(request, '', {})
 
+
 @login_required
 def loan_app(request):
+    if request.method == 'POST':
+        user = User.objects.get(username__iexact=request.user)
+        wallet = LoanSeekersWallet(LoanSeeker.objects.get(user.id))
+        print("ID -> ", wallet)
+        amount = request.POST.get('amount')
+        today = date.today()
+        loan_date = today.strftime("%d/%m/%Y")
+        data = Loan(wallet_no=wallet, loan_amount=amount, date=loan_date)
+        data.save()
+        print("Loan Application ", data)
+        return redirect('profile')
     return render(request, 'loan_application.html')
 
 
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+@login_required
+def loan_status(request):
+    return render(request, 'loanstatus.html')
 
