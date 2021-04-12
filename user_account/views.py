@@ -9,11 +9,14 @@ from django.contrib import messages
 from django.http import HttpResponse
 from user_account.models import users_account
 from django.urls import reverse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, 'profile.html')
+        return redirect('profile')
     return render(request, 'index.html')
 
 
@@ -36,6 +39,8 @@ def login_user(request):
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     if request.method == 'POST':
         print(request.POST)
         usertype = request.POST.get('usertype')
@@ -101,6 +106,19 @@ def signup(request):
                     address=address,
                 )
                 loan_seeker.save()
+
+                ##### welcome mail send
+
+                subject = 'Welcome to our class'
+                body = render_to_string('user_accounts/intro_email.html')
+
+                send_mail(
+                    subject,
+                    body,
+                    settings.EMAIL_HOST_USER,
+                    [email]
+                )
+
                 return render(request, 'signin.html')
     else:
         return render(request, 'registration.html')
@@ -135,7 +153,12 @@ def profile(request):
     else:
         return render(request, '', {})
 
+@login_required
+def loan_app(request):
+    return render(request, 'loan_application.html')
+
 
 def logout_user(request):
     logout(request)
     return redirect('home')
+

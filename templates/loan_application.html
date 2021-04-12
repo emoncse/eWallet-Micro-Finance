@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>eWallet - Loan Application</title>
+      <meta content="" name="description">
+      <meta content="" name="keywords">
+      <!-- Favicons -->
+      <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+      <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      <!-- Vendor CSS Files -->
+      <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/line-awesome/css/line-awesome.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Template Main CSS File -->
+      <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+      <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+      <link href="{% static 'css/button-style.css' %}" rel="stylesheet">
+      <link href="{% static 'css/drop-down.css' %}" rel="stylesheet">
+   </head>
+   <body>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top d-flex align-items-center ">
+         <div class="container d-flex align-items-center">
+            <div class="logo mr-auto">
+               <h1 class="text-light"><a href="{% url 'home' %}">eWallet</a></h1>
+               <!-- Uncomment below if you prefer to use an image logo -->
+               <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+            <nav class="nav-menu d-none d-lg-block">
+               <ul>
+                  <li><a href="{% url 'profile' %}">Profile</a></li>
+                  <li><a href="#">Edit Profile</a></li>
+                  <li><a href="#">Change Password</a></li>
+                  <li><a href="{% url 'signout' %}">Log Out</a></li>
+               </ul>
+            </nav>
+            <!-- .nav-menu -->
+         </div>
+      </header>
+      <!-- End Header -->
+      <main id="main">
+         <!-- ======= Breadcrumbs ======= -->
+         <section class="breadcrumbs">
+            <div class="container">
+               <div class="d-flex justify-content-between align-items-center">
+                  <h2>Loan Application</h2>
+                  <ol>
+                     <li><a href="#">Loan</a></li>
+                     <li>Loan Application</li>
+                  </ol>
+               </div>
+            </div>
+         </section>
+         <!-- End Breadcrumbs -->
+         <section class="inner-page">
+            <div class="container">
+                <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+                <form action="{% url 'loan' %}" method="POST">
+                <div class="form-control-mds label-up four twelve--tablet twelve-phone push-top-2">
+                  <select data-placeholder=" " class="chosen-select combo-material input-control" required name="country_selector">
+                                        <option value="0"></option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                        <option value="2000">2000</option>
+                                        <option value="3000">3000</option>
+                                        <option value="5000">5000</option>
+                                        <option value="10000">10000</option>
+                                    </select>
+                  <label for="country_selector" class="label-control">Select Amount</label>
+                  <div class="field-error">
+                    Mandatory field
+                  </div>
+                </div>
+              </form>
+              <button class="button" type="submit" name="submit" value="submit"><span>Submit</span></button>
+          </div>
+
+            </div>>
+         </section>
+
+      <!-- End #main -->
+      <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+      <!-- Vendor JS Files -->
+      <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+      <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/venobox/venobox.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+      <!-- Template Main JS File -->
+      <script src="{% static 'assets/js/main.js' %}"></script>
+      <script src="{% static 'assets/js/drop-down.js' %}"></script>
+   </body>
+</html>

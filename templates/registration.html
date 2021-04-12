@@ -1,175 +1,167 @@
 {% load static %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<head>
+        <title>Registration-eWallet</title>
+        <meta content="" name="description" />
+        <meta content="" name="keywords" />
 
-	<meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <!-- Favicons -->
+        <link href="{% static 'assets/img/favicon.png' %}" rel="icon" />
+        <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
 
-	<title>Registration-eWallet</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
 
-  <!-- Favicons -->
-  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+        <!-- Vendor CSS Files -->
+        <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/line-awesome/css/line-awesome.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" />
 
-	 <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <!-- Template Main CSS File -->
+        <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/line-awesome/css/line-awesome.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/venobox/venobox.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-
-
-	<!-- Mobile Specific Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<!-- Font-->
-	<link rel="stylesheet" type="text/css" href="{% static 'registration_css/montserrat-font.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'registration_fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
-	<!-- Main Style Css -->
-    <link rel="stylesheet" href="{% static 'registration_css/style.css' %}"/>
-
-</head>
+        <!-- Mobile Specific Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <!-- Font-->
+        <link rel="stylesheet" type="text/css" href="{% static 'registration_css/montserrat-font.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'registration_fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}" />
+        <!-- Main Style Css -->
+        <link rel="stylesheet" href="{% static 'registration_css/style.css' %}" />
+    </head>
 
     {% if messages %}
-        <script>
-            alert('Username already exists.');
-        </script>
+    <script>
+        alert("Username already exists.");
+    </script>
     {% endif %}
 
-
-
-<body class="form-v10">
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center ">
-    <div class="container d-flex align-items-center">
-
-      <div class="logo mr-auto">
-        <h1 class="text-light"><a href="{% url 'home' %}">eWallet</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-      </div>
-
-
-<!--nav menu start -->
-      <nav class="nav-menu d-none d-lg-block">
-        <ul>
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'signin' %}">Sign in</a></li>
-
-        </ul>
-      </nav><!-- .nav-menu -->
-
-    </div>
-  </header><!-- End Header -->
-	<div class="page-content">
-		<div class="form-v10-content">
-			<form class="form-detail" action="{% url 'signup' %}" method="post" id="myform" enctype="multipart/form-data">
-                {% csrf_token %}
-				<div class="form-left">
-					<h2>General Infomation</h2>
-					<div class="form-row">
-						<select name="usertype">
-						    <option class="option" value="notselected">Who you are?</option>
-						    <option class="option" value="investor">Member</option>
-						    <option class="option" value="loanseeker">Loan Seeker</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div>
-					<div class="form-group">
-						<div class="form-row form-row-1">
-							<input type="text" name="username" id="username" class="input-text" placeholder="Username" required>
-						</div>
-						<div class="form-row form-row-2">
-							<input type="text" name="name" id="name" class="input-text" placeholder="Certificate Name" required>
-						</div>
-					</div>
-                    <div class="form-row">
-						<input type="email" name="email" class="email" id="email" placeholder="Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-					</div>
-                    <div class="form-row">
-						<input type="password" name="password" id="password" class="input-password" required placeholder="Password" required>
-						</span>
-					</div>
-					<div class="form-row">
-						<select name="gender">
-						    <option value="gender">Gender</option>
-						    <option value="Male">Male</option>
-						    <option value="Female">Female</option>
-						    <option value="other">Other</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div>
-					<div class="form-row">
-						<input type="text" name="occupation" class="occupation" id="occupation" placeholder="Occupation" required>
-					</div>
-					<div class="form-group">
-						<div class="form-row form-row-3">
-							<input type="text" name="institution" class="institution" id="institution" placeholder="Institution" required>
-						</div>
-						<div class="form-row form-row-4">
-							<input type="date" value="date" class="dob" id="dob" placeholder="Date of Birth" name="dob" required>
-							<span class="Label">
-							  	<i class="#"></i>
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-right">
-					<h2>Contact Details</h2>
-					<div class="form-row">
-						<input type="text" name="nid" class="nid" id="nid" placeholder="National ID No." required>
-					</div>
-					<div class="form-row">
-						<input type="text" name="address" class="address" id="address" placeholder="Address" required>
-					</div>
-
-					<div class="form-group">
-						<div class="form-row form-row-1">
-							<input type="text" name="code" class="code" id="code" placeholder="880">
-						</div>
-						<div class="form-row form-row-2">
-							<input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required>
-						</div>
-					</div>
-					<div class="form-row">
-						  <label for="img" style="color: whitesmoke">Select your photo:</label>
-						  <input type="file" id="img" name="img" required>
-					</div>
-					<div class="form-checkbox">
-						<label class="container"><p>I do accept the <a href="#" class="text">Terms and Conditions</a> of eWallet.</p>
-						  	<input type="checkbox" name="checkbox">
-						  	<span class="checkmark"></span>
-						</label>
-					</div>
-					<div class="form-row">
-						<input type="submit" name="register" class="register" value="Register">
-					</div>
-
-					<div class="form-row-last">
-                    <p style="color:whitesmoke;">Already registered? <a href="{% url 'signin' %}">Login here</a></p>
+    <body class="form-v10">
+        <!-- ======= Header ======= -->
+        <header id="header" class="fixed-top d-flex align-items-center">
+            <div class="container d-flex align-items-center">
+                <div class="logo mr-auto">
+                    <h1 class="text-light"><a href="{% url 'home' %}">eWallet</a></h1>
+                    <!-- Uncomment below if you prefer to use an image logo -->
+                    <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
                 </div>
 
-				</div>
-			</form>
-		</div>
-	</div>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+                <!--nav menu start -->
+                <nav class="nav-menu d-none d-lg-block">
+                    <ul>
+                        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'signin' %}">Sign in</a></li>
+                    </ul>
+                </nav>
+                <!-- .nav-menu -->
+            </div>
+        </header>
+        <!-- End Header -->
+        <div class="page-content">
+            <div class="form-v10-content">
+                <form class="form-detail" action="{% url 'signup' %}" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-left">
+                        <h2>General Infomation</h2>
+                        <div class="form-row">
+                            <select name="usertype">
+                                <option class="option" value="notselected">Who you are?</option>
+                                <option class="option" value="investor">Member</option>
+                                <option class="option" value="loanseeker">Loan Seeker</option>
+                            </select>
+                            <span class="select-btn">
+                                <i class="zmdi zmdi-chevron-down"></i>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row form-row-1">
+                                <input type="text" name="username" id="username" class="input-text" placeholder="Username" required />
+                            </div>
+                            <div class="form-row form-row-2">
+                                <input type="text" name="name" id="name" class="input-text" placeholder="Certificate Name" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <input type="email" name="email" class="email" id="email" placeholder="Email" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" />
+                        </div>
+                        <div class="form-row">
+                            <input type="password" name="password" id="password" class="input-password" required placeholder="Password" required />
+                            <span> </span>
+                        </div>
+                        <div class="form-row">
+                            <select name="gender">
+                                <option value="gender">Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="select-btn">
+                                <i class="zmdi zmdi-chevron-down"></i>
+                            </span>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" name="occupation" class="occupation" id="occupation" placeholder="Occupation" required />
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row form-row-3">
+                                <input type="text" name="institution" class="institution" id="institution" placeholder="Institution" required />
+                            </div>
+                            <div class="form-row form-row-4">
+                                <input type="date" value="date" class="dob" id="dob" placeholder="Date of Birth" name="dob" required />
+                                <span class="Label">
+                                    <i class="#"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-right">
+                        <h2>Contact Details</h2>
+                        <div class="form-row">
+                            <input type="text" name="nid" class="nid" id="nid" placeholder="National ID No." required />
+                        </div>
+                        <div class="form-row">
+                            <input type="text" name="address" class="address" id="address" placeholder="Address" required />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row form-row-1">
+                                <input type="text" name="code" class="code" id="code" placeholder="880" />
+                            </div>
+                            <div class="form-row form-row-2">
+                                <input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="img" style="color: whitesmoke;">Select your photo:</label>
+                            <input type="file" id="img" name="img" required />
+                        </div>
+                        <div class="form-checkbox">
+                            <label class="container">
+                                <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of eWallet.</p>
+                                <input type="checkbox" name="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <input type="submit" name="register" class="register" value="Register" />
+                        </div>
+
+                        <div class="form-row-last">
+                            <p style="color: whitesmoke;">Already registered? <a href="{% url 'signin' %}">Login here</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
