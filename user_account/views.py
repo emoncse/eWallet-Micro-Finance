@@ -7,7 +7,6 @@ from loan.models import Loan
 from investor.models import Investor, InvestorsWallet
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.http import HttpResponse
 from user_account.models import users_account
 from django.urls import reverse
 from django.core.mail import send_mail
@@ -79,7 +78,7 @@ def signup(request):
 
             if usertype == 'investor':
                 investor = Investor.objects.create(
-                    username=new_user,
+                    wallet_no=new_user,
                     name=name,
                     gender=gender,
                     dob=dob,
@@ -92,13 +91,12 @@ def signup(request):
                     address=address,
                 )
                 investor.save()
-                investor_wallet = InvestorsWallet.objects.create(loan_amount=0.0)
-                investor_wallet.save()
-
-                return HttpResponse("Investor User Created.")
+                user_account_object = User.objects.get(username__exact=user_extend.username)
+                investor_obj = InvestorsWallet.objects.get(wallet_no=user_account_object.id)
+                investor_obj.save()
             else:
                 loan_seeker = LoanSeeker.objects.create(
-                    username=new_user,
+                    wallet_no=new_user,
                     name=name,
                     gender=gender,
                     dob=dob,
@@ -111,23 +109,21 @@ def signup(request):
                     address=address,
                 )
                 loan_seeker.save()
-                wallet_find = LoanSeeker.objects.get(user_extend.username).wallet_no
-                date_wallet = LoanSeekersWallet.objects.create(wallet_no=wallet_find, balance=0.0, loans_approved=0)
+                user_account_object = User.objects.get(username__exact=user_extend.username)
+                loan_seeker_obj = LoanSeeker.objects.get(wallet_no=user_account_object.id)
+                date_wallet = LoanSeekersWallet.objects.create(wallet_no=loan_seeker_obj, balance=0.0, loans_approved=0)
+                # print(date_wallet)
                 date_wallet.save()
-
-
-                ##### welcome mail send
-
+                # welcome mail send
                 subject = 'Welcome to eWallet'
+                details = 'Name : ' + name + '\n' + 'Phone : ' + phone + '\n' + 'Username : ' + username + '\n'
                 body = render_to_string('user_accounts/intro_email.html')
-
                 send_mail(
                     subject,
-                    body,
+                    'Hello there,\n' + details + body,
                     settings.EMAIL_HOST_USER,
                     [email]
                 )
-
                 return render(request, 'signin.html')
     else:
         return render(request, 'registration.html')
@@ -139,12 +135,12 @@ def profile(request):
         user = User.objects.get(username__iexact=request.user)
         details = users_account.objects.get(username__exact=user)
 
-        data = LoanSeeker.objects.get(username_id=details.username_id)
+        data = LoanSeeker.objects.get(wallet_no=details.username_id)
 
         context = {
             'usertype': details.usertype,
             'wallet_no': data.wallet_no,
-            'username': data.username,
+            'username': user.username,
             'name': data.name,
             'gender': data.gender,
             'dob': data.dob,
@@ -156,7 +152,7 @@ def profile(request):
             'phone': data.phone,
             'address': data.address,
         }
-        #print(context)
+        # print(context)
         return render(request, 'profile.html', context)
     else:
         return render(request, '', {})
@@ -188,4 +184,3 @@ def logout_user(request):
 @login_required
 def loan_status(request):
     return render(request, 'loanstatus.html')
-

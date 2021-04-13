@@ -10,7 +10,7 @@ class Loan(models.Model):
         ('Accepted', 'Accepted'),
         ('Rejected', 'Rejected')
     ]
-    wallet_no = models.ForeignKey(LoanSeekersWallet, on_delete=models.CASCADE)
+    wallet_no = models.CharField(max_length=15)
     loan_amount = models.FloatField(default=00.0)
     payable_amount = models.FloatField(default=00.0)
     loan_approval = models.CharField(max_length=10, choices=choice, default='Pending')

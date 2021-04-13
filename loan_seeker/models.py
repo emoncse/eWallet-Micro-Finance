@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 
 
 class LoanSeeker(models.Model):
-    wallet_no = models.AutoField(primary_key=True)
-    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    wallet_no = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default='')
     gender = models.CharField(max_length=6, default='')
     dob = models.DateField(auto_now=False, auto_now_add=False)
@@ -24,7 +23,8 @@ class LoanSeeker(models.Model):
 
 
 class LoanSeekersWallet(models.Model):
-    wallet_no = models.OneToOneField(LoanSeeker, on_delete=models.CASCADE, primary_key=True,)
+    # wallet_no = models.OneToOneField(primary_key=True, on_delete=models.CASCADE)
+    wallet_no = models.OneToOneField(LoanSeeker, on_delete=models.CASCADE)
     balance = models.FloatField(default=0.0)
     loan_amount = models.FloatField(default=0.0)
     deadline = models.DateField(auto_now=False, auto_now_add=False, null=True)

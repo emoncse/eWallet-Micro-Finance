@@ -3,8 +3,7 @@ from django.db import models
 
 
 class Investor(models.Model):
-    wallet_no = models.AutoField(primary_key=True)
-    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    wallet_no = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default='')
     gender = models.CharField(max_length=6, default='')
     dob = models.DateField(auto_now=False, auto_now_add=False)
@@ -14,7 +13,7 @@ class Investor(models.Model):
     nid = models.CharField(max_length=17, default='')
     image = models.ImageField(upload_to='images', default='default.png')
     phone = models.CharField(max_length=11, default='')
-    address = models.CharField(max_length=100, default='')
+    address = models.CharField(max_length=100, default='', null=True)
 
     class Meta:
         db_table = 'Investor'
@@ -29,8 +28,6 @@ class InvestorsWallet(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-
-    # wallet_no = models.ForeignKey(Investor, on_delete=models.CASCADE, primary_key=True)
     balance = models.FloatField(default=0.0)
     fixed_savings = models.FloatField(default=0.0)
     profit = models.FloatField(default=0.0)
