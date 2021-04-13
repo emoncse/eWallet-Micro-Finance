@@ -7,7 +7,7 @@ class Investor(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default='')
     gender = models.CharField(max_length=6, default='')
-    dob = models.DateField(auto_now=False, auto_now_add=False, default='0000-00-00')
+    dob = models.DateField(auto_now=False, auto_now_add=False)
     occupation = models.CharField(max_length=50, default='')
     institution = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=50, default='')
@@ -35,7 +35,7 @@ class InvestorsWallet(models.Model):
     fixed_savings = models.FloatField(default=0.0)
     profit = models.FloatField(default=0.0)
     last_deposit = models.FloatField(default=0.0)
-    deposit_date = models.DateField(auto_now=False, auto_now_add=False, default='0000-00-00')
+    deposit_date = models.DateField(auto_now=False, auto_now_add=False)
     loans_approved = models.IntegerField(default=0)
     loan_amount = models.FloatField(default=0.0)
 

@@ -74,9 +74,9 @@ def signup(request):
             new_user = authenticate(username=username, password=password)
             user_extend = users_account(
                 usertype=usertype,
-                username=new_user,
-                )
+                username=new_user,)
             user_extend.save()
+
             if usertype == 'investor':
                 investor = Investor.objects.create(
                     username=new_user,
@@ -91,8 +91,10 @@ def signup(request):
                     phone=phone,
                     address=address,
                 )
-
                 investor.save()
+                investor_wallet = InvestorsWallet.objects.create(loan_amount=0.0)
+                investor_wallet.save()
+
                 return HttpResponse("Investor User Created.")
             else:
                 loan_seeker = LoanSeeker.objects.create(
@@ -109,6 +111,10 @@ def signup(request):
                     address=address,
                 )
                 loan_seeker.save()
+                wallet_find = LoanSeeker.objects.get(user_extend.username).wallet_no
+                date_wallet = LoanSeekersWallet.objects.create(wallet_no=wallet_find, balance=0.0, loans_approved=0)
+                date_wallet.save()
+
 
                 ##### welcome mail send
 
@@ -129,7 +135,6 @@ def signup(request):
 
 @login_required
 def profile(request):
-    print("Emon ", request.user)
     if request.user.is_authenticated:
         user = User.objects.get(username__iexact=request.user)
         details = users_account.objects.get(username__exact=user)
@@ -151,7 +156,7 @@ def profile(request):
             'phone': data.phone,
             'address': data.address,
         }
-        print(context)
+        #print(context)
         return render(request, 'profile.html', context)
     else:
         return render(request, '', {})
@@ -161,12 +166,14 @@ def profile(request):
 def loan_app(request):
     if request.method == 'POST':
         user = User.objects.get(username__iexact=request.user)
-        wallet = LoanSeekersWallet(LoanSeeker.objects.get(user.id))
-        print("ID -> ", wallet)
-        amount = request.POST.get('amount')
+        wallet_no = LoanSeeker.objects.get(username__exact=user).wallet_no
+        print("ID -> ", wallet_no)
+        amount = float(request.POST.get('amount'))
+        payable = amount + (amount * .05)
         today = date.today()
         loan_date = today.strftime("%d/%m/%Y")
-        data = Loan(wallet_no=wallet, loan_amount=amount, date=loan_date)
+        data = Loan(wallet_no=wallet_no, loan_amount=amount, payable_amount=payable, date=loan_date)
+        print("Data -> ", amount, payable, loan_date)
         data.save()
         print("Loan Application ", data)
         return redirect('profile')

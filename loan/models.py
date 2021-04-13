@@ -11,7 +11,8 @@ class Loan(models.Model):
         ('Rejected', 'Rejected')
     ]
     wallet_no = models.ForeignKey(LoanSeekersWallet, on_delete=models.CASCADE)
-    loan_amount = models.FloatField(default=0.0)
+    loan_amount = models.FloatField(default=00.0)
+    payable_amount = models.FloatField(default=00.0)
     loan_approval = models.CharField(max_length=10, choices=choice, default='Pending')
     date = models.DateField(auto_now=False, auto_now_add=False, default='0000-00-00')
 
