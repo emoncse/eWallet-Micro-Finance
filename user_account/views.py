@@ -136,9 +136,23 @@ def profile(request):
         details = users_account.objects.get(username__exact=user)
 
         data = LoanSeeker.objects.get(wallet_no=details.username_id)
+        wallet_data = LoanSeekersWallet.objects.get(wallet_no=data.id)
+        loan_data = Loan.objects.all()
+        total_loan = 0.0
+        count = 0
+        for c in loan_data:
+            total_loan += c.loan_amount
+            if c.loan_approval == 'Accepted':
+                count += 1
+        print(total_loan, count)
+        loan_type = ''
+        if details.usertype == 'loanseeker':
+            loan_type = 'Loan Seeker'
+        else:
+            loan_type = 'Investor'
 
         context = {
-            'usertype': details.usertype,
+            'usertype': loan_type,
             'wallet_no': data.wallet_no,
             'username': user.username,
             'name': data.name,
@@ -151,6 +165,9 @@ def profile(request):
             'image': data.image,
             'phone': data.phone,
             'address': data.address,
+            'balance': wallet_data.balance,
+            'loan_amount': total_loan,
+            'loans_approved': count,
         }
         # print(context)
         return render(request, 'profile.html', context)
@@ -161,15 +178,17 @@ def profile(request):
 @login_required
 def loan_app(request):
     if request.method == 'POST':
-        user = User.objects.get(username__iexact=request.user)
-        wallet_no = LoanSeeker.objects.get(username__exact=user).wallet_no
-        print("ID -> ", wallet_no)
+        user_extend = users_account(username=request.user)
+        user_account_object = User.objects.get(username__exact=user_extend.username)
+        loan_seeker_obj = LoanSeeker.objects.get(wallet_no=user_account_object.id)
+        loan_wallet = LoanSeekersWallet.objects.get(wallet_no=loan_seeker_obj)
+        print("ID -> ", loan_wallet)
         amount = float(request.POST.get('amount'))
         payable = amount + (amount * .05)
         today = date.today()
-        loan_date = today.strftime("%d/%m/%Y")
-        data = Loan(wallet_no=wallet_no, loan_amount=amount, payable_amount=payable, date=loan_date)
-        print("Data -> ", amount, payable, loan_date)
+        print(today)
+        data = Loan(wallet_no=loan_wallet.id, loan_amount=amount, payable_amount=payable, date=today)
+        print("Data -> ", amount, payable, today)
         data.save()
         print("Loan Application ", data)
         return redirect('profile')
@@ -183,4 +202,22 @@ def logout_user(request):
 
 @login_required
 def loan_status(request):
-    return render(request, 'loanstatus.html')
+    list = []
+    obj = Loan.objects.all()
+    count = 1
+    for x in obj:
+        ob = LoanSeeker.objects.get(wallet_no=x.wallet_no)
+        dict = {
+            'sl': count,
+            'phone' : ob.phone,
+            'amount' : x.loan_amount,
+            'payable' : x.payable_amount,
+            'approval': x.loan_approval,
+            'date': x.date,
+        }
+        count += 1
+        list.append(dict)
+    contex = {
+        'data': list
+    }
+    return render(request, 'loanstatus.html', contex)

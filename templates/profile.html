@@ -76,6 +76,9 @@
                      <button onclick="location.href='https://www.google.com'" class="button"><span>Transactions</span></button>
                      <button onclick="location.href='https://www.google.com'" class="button"><span>Money Withdraw</span></button>
                      <button onclick="location.href='{% url 'loan_status' %}'" class="button"><span>Loan Status</span></button>
+                     <button onclick="location.href='{% url 'loan_status' %}'" class="button"><span>Add Money</span></button>
+                     <button onclick="location.href='{% url 'loan_status' %}'" class="button"><span>Pay Instalment</span></button>
+
                   </div>
                   <div class="right">
                      <div class="info">
@@ -147,18 +150,18 @@
                         </div> -->
                      <br>
                      {% block loan_seeker %}
-                     {% if usertype == 'loanseeker' %}
+                     {% if usertype == 'Loan Seeker' %}
                      <div class="projects">
                         <h3>Wallet</h3>
                         <div class="Wallet">
                            <div class="projects_data">
                               <div class="data">
                                  <a>Balance</a>
-                                 <p>00.0</p>
+                                 <p>{{ balance }}</p>
                               </div>
                               <div class="data">
                                  <a>Deadline</a>
-                                 <p>20/04/2021</p>
+                                 <p>Data not fetched</p>
                               </div>
                               <div class="data">
                                  <a>Remaining</a>
@@ -169,16 +172,16 @@
                         <div class="Wallet">
                            <div class="projects_data">
                               <div class="data">
-                                 <a>Loan Status</a>
-                                 <p>Active</p>
+                                 <a>Loan Approved</a>
+                                 <p>{{ loans_approved }}</p>
                               </div>
                               <div class="data">
                                  <a>Loan Amount</a>
-                                 <p>10000</p>
+                                 <p>{{ loan_amount }}</p>
                               </div>
                               <div class="data">
                                  <a>Interest</a>
-                                 <p>7%</p>
+                                 <p>5%</p>
                               </div>
                            </div>
                         </div>

@@ -1,0 +1,8 @@
+<select name="approval_status" id="approval_status">
+    <option value="pending">Pending</option>
+    <option value="accpeted">Accepted</option>
+    <option value="rejected">Rejected</option>
+  </select>
+
+<form  action="{% url 'loan_app' %}" method="post" role="form">
+                    {% csrf_token %}

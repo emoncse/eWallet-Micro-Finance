@@ -50,9 +50,9 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="#">Profile</a></li>
           <li><a href="#">Edit Profile</a></li>
-          <li><a href="{% url 'password_change' %}">Change Password</a></li>
+          <li><a href="#">Change Password</a></li>
           <li><a href="{% url 'signout' %}">Log Out</a></li>
 
         </ul>
@@ -129,11 +129,11 @@ tr:nth-child(even) {
     <td>{{ x.amount }}</td>
     <td>{{ x.payable }}</td>
     <td>{{ x.date }}</td>
-   <td>{{ x.approval }}</td>
+    <td>{{ x.approval }}</td>
+    <td> <button>Submit</button></td>
   </tr>
   {% endfor %}
   </table>
-</form>
 
       </div>
     </section>
