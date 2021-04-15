@@ -3,6 +3,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from loan_seeker.models import LoanSeeker, LoanSeekersWallet
+from central_wallet.models import Transactions
 from loan.models import Loan
 from investor.models import Investor, InvestorsWallet
 from django.contrib.auth import authenticate, login, logout
@@ -34,7 +35,7 @@ def login_user(request):
             return redirect(reverse('profile'))
         else:
             messages.success(request, 'Error Logging In - Please Try Again...')
-            return redirect(reverse('signin'))
+            return redirect('signin')
     else:
         return render(request, 'signin.html', {'messages': 'Wrong Credential'})
 
@@ -57,6 +58,7 @@ def signup(request):
         phone = request.POST.get('phone')
         dob = request.POST.get('dob')
         image = request.FILES['img']
+
         fs = FileSystemStorage()
         imagename = fs.save(image.name, image)
         upload_url = fs.url(imagename)
@@ -68,12 +70,12 @@ def signup(request):
                 username=username,
                 email=email,
                 password=password
-                )
+            )
             user.save()
             new_user = authenticate(username=username, password=password)
             user_extend = users_account(
                 usertype=usertype,
-                username=new_user,)
+                username=new_user, )
             user_extend.save()
 
             if usertype == 'investor':
@@ -94,6 +96,17 @@ def signup(request):
                 user_account_object = User.objects.get(username__exact=user_extend.username)
                 investor_obj = InvestorsWallet.objects.get(wallet_no=user_account_object.id)
                 investor_obj.save()
+                # welcome mail send
+                subject = 'Welcome to eWallet'
+                details = 'Dear Investor,\n\n' + 'Your Details:\nName : ' + name + '\n' + 'Phone : ' + phone + '\n' + 'Username : ' + username + '\n has been registered.'
+                body = render_to_string('user_accounts/intro_email.html')
+                send_mail(
+                    subject,
+                    'Hello there,\n' + details + body,
+                    settings.EMAIL_HOST_USER,
+                    [email]
+                )
+                return render(request, 'signin.html')
             else:
                 loan_seeker = LoanSeeker.objects.create(
                     wallet_no=new_user,
@@ -116,17 +129,103 @@ def signup(request):
                 date_wallet.save()
                 # welcome mail send
                 subject = 'Welcome to eWallet'
-                details = 'Name : ' + name + '\n' + 'Phone : ' + phone + '\n' + 'Username : ' + username + '\n'
+                details = 'Dear Loan Seeker,\n\n' + 'Your Details:\nName : ' + name + '\n' + 'Phone : ' + phone + '\n' + 'Username : ' + username + '\n has been registered.\n'
                 body = render_to_string('user_accounts/intro_email.html')
                 send_mail(
                     subject,
-                    'Hello there,\n' + details + body,
+                    details + body,
                     settings.EMAIL_HOST_USER,
                     [email]
                 )
                 return render(request, 'signin.html')
     else:
         return render(request, 'registration.html')
+
+
+@login_required
+def add_money(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            amount = request.POST['amount']
+            user_extend = users_account(username=request.user)
+            user_account_object = User.objects.get(username__exact=user_extend.username)
+            email = user_account_object.email
+            loan_seeker_obj = LoanSeeker.objects.get(wallet_no=user_account_object.id)
+            loan_wallet = LoanSeekersWallet.objects.get(wallet_no=loan_seeker_obj)
+            extactAmount = loan_wallet.balance
+            extactAmount += float(amount)
+            loan_wallet.balance = extactAmount
+            loan_wallet.save()
+
+            # welcome mail send
+            subject = 'Transaction Alert'
+            details = 'Dear Loan Seeker,\n\n' + 'You have deposit ' + str(amount) + ' to your account.\n'
+            body = 'Current balance is ' + str(loan_wallet.balance)
+            send_mail(
+                subject,
+                details + body,
+                settings.EMAIL_HOST_USER,
+                [email]
+            )
+            return redirect('profile')
+    return render(request, 'deposit.html')
+
+
+@login_required
+def pay_instalment(request):
+    if request.method == 'GET':
+        return render(request, 'pay_installment.html')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            instalment_amount = request.POST['amount']
+            user_extend = users_account(username=request.user)
+            user_account_object = User.objects.get(username__exact=user_extend.username)
+            email = user_account_object.email
+            loan_seeker_obj = LoanSeeker.objects.get(wallet_no=user_account_object.id)
+            loan_wallet = LoanSeekersWallet.objects.get(wallet_no=loan_seeker_obj)
+            current_balance = loan_wallet.balance
+            if current_balance < instalment_amount:
+                # welcome mail send
+                subject = 'Transaction Alert'
+                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + instalment_amount + 'has been failed ' \
+                                                                                                  'due to insufficient ' \
+                                                                                                  'balance. Please ' \
+                                                                                                  'add money first. '
+                body = 'Current balance is ' + loan_wallet.balance
+                send_mail(
+                    subject,
+                    'Hello there,\n' + details + body,
+                    settings.EMAIL_HOST_USER,
+                    [email]
+                )
+                return render(request, 'pay_installment.html', {'message': 'Insufficient balance.'})
+            else:
+                extact_balance = loan_wallet.balance
+                extact_balance -= instalment_amount
+                loan_wallet.balance = extact_balance
+                loan_wallet.save()
+
+                transaction = Transactions.objects.create(transaction_amount=instalment_amount,
+                                                          transaction_type='Instalment',
+                                                          user_type=user_extend.usertype,
+                                                          date=date.today(),
+                                                          remarks="Successful",
+                                                          )
+                transaction.save()
+                # welcome mail send
+                subject = 'Transaction Alert'
+                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + instalment_amount + ' has been paid.'
+                body = 'Current balance is ' + loan_wallet.balance
+                send_mail(
+                    subject,
+                    details + body,
+                    settings.EMAIL_HOST_USER,
+                    [email]
+                )
+                return render(request, 'pay_installment.html', {'message': 'Instalment amount has been deduct from '
+                                                                           'your balance'})
+        return redirect('profile')
+    return render(request, 'pay_installment.html', {'message': 'Invalid request'})
 
 
 @login_required
@@ -169,10 +268,10 @@ def profile(request):
             'loan_amount': total_loan,
             'loans_approved': count,
         }
-        # print(context)
+        print('Context -> ', context)
         return render(request, 'profile.html', context)
     else:
-        return render(request, '', {})
+        return render(request, 'signin.html', {})
 
 
 @login_required
@@ -190,7 +289,18 @@ def loan_app(request):
         data = Loan(wallet_no=loan_wallet.id, loan_amount=amount, payable_amount=payable, date=today)
         print("Data -> ", amount, payable, today)
         data.save()
-        print("Loan Application ", data)
+
+        # welcome mail send
+        subject = 'Transaction Alert'
+        details = 'Dear Loan Seeker,\n\n' + 'Loan Application of ' + str(amount) + ' BDT has been submitted.'
+        body = 'Please wait for the approval'
+        send_mail(
+            subject,
+            details + body,
+            settings.EMAIL_HOST_USER,
+            [user_account_object.email]
+        )
+
         return redirect('profile')
     return render(request, 'loan_application.html')
 
@@ -209,9 +319,9 @@ def loan_status(request):
         ob = LoanSeeker.objects.get(wallet_no=x.wallet_no)
         dict = {
             'sl': count,
-            'phone' : ob.phone,
-            'amount' : x.loan_amount,
-            'payable' : x.payable_amount,
+            'phone': ob.phone,
+            'amount': x.loan_amount,
+            'payable': x.payable_amount,
             'approval': x.loan_approval,
             'date': x.date,
         }

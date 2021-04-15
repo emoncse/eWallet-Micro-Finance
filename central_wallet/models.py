@@ -23,7 +23,7 @@ class Transactions(models.Model):
 
 
     class Meta:
-        db_table = 'Transactions'
+        db_table = 'Central_Transactions'
 
 
 class LoanLog(models.Model):

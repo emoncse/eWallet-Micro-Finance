@@ -27,14 +27,46 @@
       <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
       <link href="{% static 'css/profile.css' %}" rel="stylesheet">
       <link href="{% static 'css/button-style.css' %}" rel="stylesheet">
-      <link href="{% static 'css/drop-down.css' %}" rel="stylesheet">
+       <style>
+           select {
+                word-wrap: normal;
+                width: 150px;
+                margin-left: 150px;
+                height: 35px;
+            }
+           label {
+                margin-bottom: 10px;
+                display: block;
+                font-family: 'Open Sans', sans-serif;
+                text-align-last: center;
+            }
+            .container1 {
+                background-color: white;
+                padding: 20px 25px 20px 25px;
+                border: 1px solid coral;
+                border-radius: 3px;
+                align-content: center;
+                align-items: center;
+                align-self: center;
+                margin-left: 320px;
+                width: 500px;
+            }
+            #footer {
+                background: #14151c;
+                color: #fff;
+                font-size: 14px;
+                text-align: center;
+                padding: 30px 0;
+                margin-top: 140px;
+            }
+       </style>
    </head>
    <body>
       <!-- ======= Header ======= -->
       <header id="header" class="fixed-top d-flex align-items-center ">
          <div class="container d-flex align-items-center">
             <div class="logo mr-auto">
-               <h1 class="text-light"><a href="{% url 'home' %}">eWallet</a></h1>
+               <h1 class="text-light"><a href="{% url 'profile' %}">eWallet</a></h1>
                <!-- Uncomment below if you prefer to use an image logo -->
                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -42,35 +74,53 @@
                <ul>
                   <li><a href="{% url 'profile' %}">Profile</a></li>
                   <li><a href="#">Edit Profile</a></li>
-                  <li><a href="#">Change Password</a></li>
+                  <li><a href="{% url 'password_change' %}">Change Password</a></li>
                   <li><a href="{% url 'signout' %}">Log Out</a></li>
                </ul>
             </nav>
             <!-- .nav-menu -->
          </div>
       </header>
-      <!-- End Header -->
-      <main id="main">
-         <!-- ======= Breadcrumbs ======= -->
-         <section class="breadcrumbs">
-            <div class="container">
-               <div class="d-flex justify-content-between align-items-center">
-                  <h2>Loan Application</h2>
-                  <ol>
-                     <li><a href="#">Loan</a></li>
-                     <li>Loan Application</li>
-                  </ol>
-               </div>
-            </div>
-         </section>
-         <!-- End Breadcrumbs -->
-         <section class="inner-page">
-            <div class="container">
-                <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-                <form action="{% url 'loan_app' %}" method="POST">
+  <main id="main">
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Deposit Money</h2>
+          <ol>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li>Loan Application</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+      <section class="inner-page">
+      <div class="container">
+
+        <div class="main">
+
+        <div class ="topbar">
+          <h2>Deposit money to wallet</h2>
+        </div>
+          <hr>
+          <br>
+
+<div class="row">
+  <div class="col-75">
+    <div class="container1">
+      <form action="{% url 'loan_app' %}" method="POST">
                     {% csrf_token %}
-                <div class="form-control-mds label-up four twelve--tablet twelve-phone push-top-2">
-                  <select data-placeholder=" " class="chosen-select combo-material input-control" required name="amount">
+        <div class="row">
+          <div class="col-50">
+
+            <h3 style="text-align: center">Loan Amount</h3><hr>
+                 <label for="country_selector" class="label-control">Select Amount</label>
+                    <select data-placeholder=" " class="chosen-select combo-material input-control" required name="amount">
                                         <option value="0"></option>
                                         <option value="500">500</option>
                                         <option value="1000">1000</option>
@@ -78,20 +128,80 @@
                                         <option value="3000">3000</option>
                                         <option value="5000">5000</option>
                                         <option value="10000">10000</option>
-                                    </select>
-                  <label for="country_selector" class="label-control">Select Amount</label>
-                    <button class="button" type="submit" name="submit" value="submit"><span>Submit</span></button>
-                  <div class="field-error">
-                    Mandatory field
-                  </div>
-                </div>
-              </form>
+                    </select>
 
+
+             <input type="submit" value="Enter" class="btn">
+            <br>
           </div>
-         </section>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </section>
 
-      <!-- End #main -->
-      <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+            <style>
+              .btn{
+                  background-color: black;
+                  color: coral;
+                  font-family: 'Open Sans', sans-serif ;
+              }
+              .row {
+                    display: -ms-flexbox; /* IE10 */
+                    display: flex;
+                    -ms-flex-wrap: wrap; /* IE10 */
+                    flex-wrap: wrap;
+                    margin: 0 -16px;
+                  }
+
+
+                        .col-50 {
+                          -ms-flex: 50%; /* IE10 */
+                          flex: 50%;
+                        }
+                        .container1 {
+                        background-color: white;
+                        padding: 20px 25px 20px 25px;
+                        border: 1px solid coral;
+                        border-radius: 3px;
+                          align-content: center;
+                          align-items: center;
+                          align-self: center;
+
+                      }
+                        label {
+                            margin-bottom: 10px;
+                            display: block;
+                          font-family: 'Open Sans', sans-serif;
+                          }
+                        .topbar{
+                          color: #333333;
+                          text-align: center;
+                        }
+          </style>
+  </main>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <h3>eWallet</h3>
+      <p>A creative and interactive website for your finance solutions</p>
+      <div class="copyright">
+        &copy; Copyright <strong><span>eWallet</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/selecao-bootstrap-template/ -->
+      </div>
+
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
       <!-- Vendor JS Files -->
       <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
       <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -103,16 +213,7 @@
       <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
       <!-- Template Main JS File -->
       <script src="{% static 'assets/js/main.js' %}"></script>
-      <script src="{% static 'assets/js/drop-down.js' %}"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{#      <script>#}
-{#      $(document).ready(function(){#}
-{#      $("button").click(function(){#}
-{#         alert("Loan application has been submitted. Waiting for approval. Check profile section.");#}
-{#         window.location = '{% url 'profile' %}';#}
-{#       });#}
-{#      });#}
-{#      </script>#}
-      </main>
-   </body>
+
+</body>
+
 </html>

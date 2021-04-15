@@ -1,8 +1,7 @@
-from django.conf.urls import url
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
+from django.conf.urls import *
 
 urlpatterns = (
     path('', views.home, name='home'),
@@ -11,6 +10,8 @@ urlpatterns = (
     path('profile/', views.profile, name='profile'),
     path('signout/', views.logout_user, name='signout'),
     path('loan_app/', views.loan_app, name='loan_app'),
+    path('deposit/', views.add_money, name='deposit'),
+    path('pay_instalment/', views.pay_instalment, name='pay_instalment'),
     path('loan_status/', views.loan_status, name='loan_status'),
     path('password-change/',
          auth_views.PasswordChangeView.as_view(template_name='user_accounts/password_change.html'),
