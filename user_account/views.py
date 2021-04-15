@@ -312,12 +312,12 @@ def logout_user(request):
 
 @login_required
 def loan_status(request):
-    list = []
+    List = []
     obj = Loan.objects.all()
     count = 1
     for x in obj:
         ob = LoanSeeker.objects.get(wallet_no=x.wallet_no)
-        dict = {
+        dictionary = {
             'sl': count,
             'phone': ob.phone,
             'amount': x.loan_amount,
@@ -326,8 +326,8 @@ def loan_status(request):
             'date': x.date,
         }
         count += 1
-        list.append(dict)
-    contex = {
-        'data': list
+        List.append(dictionary)
+    context = {
+        'data': List
     }
-    return render(request, 'loanstatus.html', contex)
+    return render(request, 'loanstatus.html', context)
