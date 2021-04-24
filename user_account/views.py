@@ -184,14 +184,14 @@ def pay_instalment(request):
             loan_seeker_obj = LoanSeeker.objects.get(wallet_no=user_account_object.id)
             loan_wallet = LoanSeekersWallet.objects.get(wallet_no=loan_seeker_obj)
             current_balance = loan_wallet.balance
-            if current_balance < instalment_amount:
+            if float(current_balance) < float(instalment_amount):
                 # welcome mail send
                 subject = 'Transaction Alert'
-                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + instalment_amount + 'has been failed ' \
+                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + str(instalment_amount) + 'has been failed ' \
                                                                                                   'due to insufficient ' \
                                                                                                   'balance. Please ' \
                                                                                                   'add money first. '
-                body = 'Current balance is ' + loan_wallet.balance
+                body = 'Current balance is ' + str(loan_wallet.balance)
                 send_mail(
                     subject,
                     'Hello there,\n' + details + body,
@@ -201,7 +201,7 @@ def pay_instalment(request):
                 return render(request, 'pay_installment.html', {'message': 'Insufficient balance.'})
             else:
                 extact_balance = loan_wallet.balance
-                extact_balance -= instalment_amount
+                extact_balance -= float(instalment_amount)
                 loan_wallet.balance = extact_balance
                 loan_wallet.save()
 
@@ -214,8 +214,8 @@ def pay_instalment(request):
                 transaction.save()
                 # welcome mail send
                 subject = 'Transaction Alert'
-                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + instalment_amount + ' has been paid.'
-                body = 'Current balance is ' + loan_wallet.balance
+                details = 'Dear Loan Seeker,\n\n' + 'Instalment amount of ' + str(instalment_amount) + ' has been paid.'
+                body = 'Current balance is ' + str(loan_wallet.balance)
                 send_mail(
                     subject,
                     details + body,
@@ -312,22 +312,21 @@ def logout_user(request):
 
 @login_required
 def loan_status(request):
-    List = []
+    list = []
     obj = Loan.objects.all()
     count = 1
     for x in obj:
-        ob = LoanSeeker.objects.get(wallet_no=x.wallet_no)
-        dictionary = {
+        dict = {
             'sl': count,
-            'phone': ob.phone,
+            'phone': x.id,
             'amount': x.loan_amount,
             'payable': x.payable_amount,
             'approval': x.loan_approval,
             'date': x.date,
         }
         count += 1
-        List.append(dictionary)
-    context = {
-        'data': List
+        list.append(dict)
+    contex = {
+        'data': list
     }
-    return render(request, 'loanstatus.html', context)
+    return render(request, 'loanstatus.html', contex)
