@@ -330,3 +330,5 @@ def loan_status(request):
         'data': list
     }
     return render(request, 'loanstatus.html', contex)
+
+
